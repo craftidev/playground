@@ -1,6 +1,7 @@
 import Link from "next/link";
 import PocketBase from 'pocketbase';
 import styles from './Notes.module.css';
+import CreateNote from "./[id]/CreateNote";
 
 // Next13 export variables for cache behavior
 export const dynamic = 'auto',
@@ -27,6 +28,7 @@ async function getNotes() {
 
 export default async function NotesPage() {
     const notes = await getNotes();
+
     return (
         <div>
             <h1>Notes</h1>
@@ -36,6 +38,8 @@ export default async function NotesPage() {
                     return <Note key={note.id} note={note} />;
                 })}
             </div>
+
+            <CreateNote />
         </div>
     );
 }
