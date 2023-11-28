@@ -2,13 +2,27 @@ import Link from "next/link";
 import PocketBase from 'pocketbase';
 import styles from './Notes.module.css';
 
+// Next13 export variables for cache behavior
+export const dynamic = 'auto',
+    dynamicParams = true,
+    revalidate = 0,
+    fetchCache = 'auto',
+    runtime = 'nodejs',
+    preferredRegion = 'auto'
+;
+
 async function getNotes() {
+    // const apiResponse = await fetch(
+    //     'http://127.0.0.1:8090/api/collections/notes/records?page=1&perPage=30',
+    //     { cache: 'no-store' }
+    // );
+    // const dataJson = await apiResponse.json();
     const pocketBase = new PocketBase('http://127.0.0.1:8090');
     const data = await pocketBase.collection('notes').getFullList({
         sort: '-created', perPage: 30
     });
 
-    return data;
+    return data as any[];
 }
 
 export default async function NotesPage() {
@@ -26,7 +40,7 @@ export default async function NotesPage() {
     );
 }
 
-function Note({note}: any) {
+function Note({ note }: any) {
     const { id, title, content, created } = note ||{};
     return (
         <Link href={`/notes/${id}`}>
