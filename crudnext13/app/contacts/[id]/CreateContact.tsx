@@ -4,47 +4,57 @@ import { useState } from 'react';
 import { useRouter} from 'next/navigation';
 
 export default function CreateContact() {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const [lastname, setLastname] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [phone, setPhone] = useState('');
 
     const router = useRouter();
 
     const create = async () => {
-        await fetch('http://127.0.0.1:8090/api/collections/notes/records', {
+        await fetch('http://127.0.0.1:8090/api/collections/contacts/records', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                title,
-                content
+                lastname,
+                firstname,
+                phone
             })
         })
 
-        setTitle('');
-        setContent('');
+        setLastname('');
+        setFirstname('');
+        setPhone('');
 
         router.refresh();
     }
 
     return (
         <form onSubmit={create}>
-            <h3>Create a new Note</h3>
+            <h3>Create a new Contact</h3>
 
             <input
                 type="text"
-                placeholder='Title'
-                value={title}
-                onChange={(event) => setTitle(event.target.value)}
+                placeholder='Last name'
+                value={lastname}
+                onChange={(event) => setLastname(event.target.value)}
+            />
+
+            <input
+                type="text"
+                placeholder='First name'
+                value={firstname}
+                onChange={(event) => setFirstname(event.target.value)}
             />
             
             <textarea
-                placeholder='Content'
-                value={content}
-                onChange={(event) => setContent(event.target.value)}
+                placeholder='Phone number'
+                value={phone}
+                onChange={(event) => setPhone(event.target.value)}
             />
 
-            <button type='submit'>Create note</button>
+            <button type='submit'>Create contact</button>
         </form>
     )
 }
