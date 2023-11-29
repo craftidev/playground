@@ -1,7 +1,7 @@
 'use client'; // don't render on the server
 
 import { useState } from 'react';
-import { useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function CreateContact() {
     const [lastname, setLastname] = useState('');
