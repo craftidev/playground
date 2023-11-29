@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter} from 'next/navigation';
 
-export default function CreateNote() {
+export default function CreateContact() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
