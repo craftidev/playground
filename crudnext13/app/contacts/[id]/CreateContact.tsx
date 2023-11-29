@@ -48,7 +48,8 @@ export default function CreateContact() {
                 onChange={(event) => setFirstname(event.target.value)}
             />
             
-            <textarea
+            <input
+                type="text"
                 placeholder='Phone number'
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
