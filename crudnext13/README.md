@@ -3,6 +3,11 @@ This is a [Next.js](https://nextjs.org/) sandbox project, with [PocketBase](http
 C.R.U.D. on simple Notes app.
 
 ## Getting Started
+### Next.js 13
+```bash
+npm run dev
+```
+
 ### PocketBase
 For a quick/light local DB (squilite API):
 
@@ -11,9 +16,4 @@ For a quick/light local DB (squilite API):
 
 ```bash
 ./pocketbase serve
-```
-
-### Next.js 13
-```bash
-npm run dev
 ```
