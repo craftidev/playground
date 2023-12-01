@@ -28,7 +28,7 @@ for (i, line) in enumerate(data):
         while (code in line):
             startingIndex = line.index(code)
             line = line[:startingIndex] + key + line[startingIndex + len(code):]
-        data[i] = line
+    data[i] = line
 
 # Same solution than part1 after transformation
 TotalOfFirstAndLastDigitOfEachLine = 0
