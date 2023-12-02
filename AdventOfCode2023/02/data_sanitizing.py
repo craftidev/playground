@@ -1,6 +1,14 @@
 # https://adventofcode.com/2023/day/2
 # Sanitize data into dict (games) of list (draws) of dicts (draw)
-def main(raw_data):
+import os
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+data_file_path = os.path.join(script_dir, 'day2.data')
+
+with open(data_file_path, 'r') as file:
+    raw_data = file.readlines()
+
+def main():
     data = dict()
     for line in raw_data:
         game_num_prefix = 'Game '
