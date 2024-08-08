@@ -41,11 +41,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: 4,
           crossAxisSpacing: 8.0,
           mainAxisSpacing: 8.0,
           children: <Widget>[
-            _buildGridButton(context, 'Exercise 1', const Exercise1()),
+            _buildGridButton(context, 'Spin words', const SpinWords()),
             _buildGridButton(context, 'Exercise 2', const Exercise2()),
             // Add exercises here
           ],
@@ -67,7 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
           borderRadius: BorderRadius.circular(8.0), // Change this value for smoother or sharper corners
         ),
       ),
-      child: Text(title),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 26)
+      ),
     );
   }
 }
