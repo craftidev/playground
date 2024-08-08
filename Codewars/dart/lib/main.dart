@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/exercise1.dart';
+import 'screens/spin_words.dart';
 import 'screens/exercise2.dart';
 
 void main() {
