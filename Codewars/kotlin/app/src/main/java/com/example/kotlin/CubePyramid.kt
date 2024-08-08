@@ -21,6 +21,7 @@ findNb(91716553919377) --> -1
 
 import kotlin.random.Random // For custom test
 
+// Finding n for volumeInput = n^3 + (n-1)^3 + ... + 1^3
 fun findNb(volumeInput: Long): Long {
     var numberOfFloors: Long = 0L
     var volume: Long = volumeInput
@@ -37,12 +38,22 @@ fun findNb(volumeInput: Long): Long {
     return -1
 }
 
+// Custom test
 fun main() {
-    // Custom test
     val randomInt: Long = Random.nextInt(1, 10000).toLong()
     var m: Long = 0L
 
     for (i in 1..randomInt) {
         m += (i * i * i)
     }
+
+    val test: Long  = findNb(m)
+
+    println("Volume of $m.")
+    if (test == randomInt) {
+        println("TEST PASSED")
+    } else {
+        println("/!\\TEST FAILED/!\\")
+    }
+    println("Number of floors: $randomInt")
 }
