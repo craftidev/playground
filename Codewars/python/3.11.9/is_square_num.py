@@ -1,4 +1,6 @@
 """
+https://www.codewars.com/kata/54c27a33fb7da0db0100040e/solutions/python
+
 A square of squares
 
 You like building blocks.
