@@ -10,16 +10,8 @@ solution("abc", "d") // returns false
 
 package string_check
 
-import (
-    "reflect"
-)
-
 func IsEndingWithString(str string, ending string) bool {
-    rune_str := []rune(str)
-    rune_ending := []rune(ending)
 
-    return  len(rune_str) >= len(rune_ending) &&
-            reflect.DeepEqual(
-                rune_str[len(rune_str)-len(rune_ending):], rune_ending,
-            )
+    return  len(str) >= len(ending) &&
+            str[len(str)-len(ending):] == ending
 }
