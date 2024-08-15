@@ -20,16 +20,16 @@ Courtesy of projecteuler.net
 */
 
 fun sumOfMultiplesBelow(threshold: Int): Int {
-    val MULTIPLES: Array<Int> = arrayOf(3, 5) // Don't put zero in there
-    var result: Int = 0
+    val multiples: Array<Int> = arrayOf(3, 5) // Don't put zero in there
+    var result = 0
 
-    if (threshold < 0) { return result }
-
-    for (i in 1 until threshold) {
-        for (multiple in MULTIPLES) {
-            if (i % multiple == 0) {
-                result += i
-                break // Only count `i` once in case it has other multiples
+    if (threshold >= 0) {
+        for (i in 1 until threshold) {
+            for (multiple in multiples) {
+                if (i % multiple == 0) {
+                    result += i
+                    break // Only count `i` once in case it has other multiples
+                }
             }
         }
     }
