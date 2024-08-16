@@ -52,7 +52,7 @@ def maxSubArray(self, nums: List[int]) -> int:
     temporary_sum_max_subarray: int = -104 # min value
 
     for element in nums:
-        # Init or new search after getting `temporary_sum_max_subarray`
+        # Init search
         if sum_max_subarray == -105:
             sum_max_subarray = element
             continue
@@ -66,13 +66,11 @@ def maxSubArray(self, nums: List[int]) -> int:
         if element >= 0:
             # after a negative streak
             if potential_threshold_val < 0:
+                potential_threshold_val += element
                 # element bigger than negative streak
-                if element + potential_threshold_val > 0:
-                    sum_max_subarray += element + potential_threshold_val
+                if potential_threshold_val > 0:
+                    sum_max_subarray += potential_threshold_val
                     potential_threshold_val = 0
-                # element smaller than negative streak
-                else:
-                    potential_threshold_val += element
             # after a positive streak
             else:
                 sum_max_subarray += element
