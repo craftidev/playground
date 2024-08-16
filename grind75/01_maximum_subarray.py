@@ -93,8 +93,6 @@ def maxSubArray(self, nums: List[int]) -> int:
     potential_threshold_val: int = 0
     temporary_sum_max_subarray: int = -104 # min value
 
-    print("#####TEST#####", nums)
-
     for element in nums:
         # Init or new search after getting `temporary_sum_max_subarray`
         if sum_max_subarray == -105:
