@@ -35,6 +35,16 @@ import random
 
 
 def maxSubArray(self, nums: List[int]) -> int:
+    """
+    This function finds the subarray with the largest sum in a given list of integers.
+    It uses a dynamic programming approach with a time complexity of O(n).
+
+    Parameters:
+    nums (List[int]): The input list of integers.
+
+    Returns:
+    int: The sum of the subarray with the largest sum.
+    """
 ##### O(n^2) - first solution
     #
     # if len(nums) > 1:
@@ -98,7 +108,9 @@ class TestMaxSubArray(unittest.TestCase):
         self.assertEqual(maxSubArray(self, [-2, 1, -3, 4, -1, 2, 1, -5, 4]), 6)
         self.assertEqual(maxSubArray(self, [5, 4, -1, 7, 8]), 23)
     def test_complex_subarray(self):
-        self.assertEqual(maxSubArray(self, [-1, 5, -1, 3, 3, -1, 2, -2, 5, -4, -5, -5, 20, -11, -9, 5, -1, 6, -2, 7, 5, 1]), 21)
+        self.assertEqual(
+            maxSubArray(self, [-1, 5, -1, 3, 3, -1, 2, -2, 5, -4, -5, -5, 20, -11, -9, 5, -1, 6, -2, 7, 5, 1]), 21
+        )
 
 if __name__ == '__main__':
     unittest.main()
