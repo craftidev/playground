@@ -34,50 +34,8 @@ import unittest
 import random
 
 
-def subArrayFromListAndIndexes(list: List[int], index_start: int, index_end: int) -> List[int]:
-    """
-    This function performs a slicing operation on a given list.
-
-    Parameters:
-    list (List[int]): The input list on which the slicing operation will be performed.
-    index_start (int): The starting index for the slicing operation.
-    index_end (int): The ending index for the slicing operation.
-
-    Returns:
-    List[int]: The subarray of the input list, or an empty list if the indexes are invalid.
-
-    Raises:
-    None
-
-    Note:
-    - The function performs error handling for invalid indexes, such as negative indexes, indexes greater than the list length, or an inversion of indexes.
-    - The magic_operation variable is used to calculate the length of the sliced portion based on the provided indexes.
-    """
-
-    # Error handling
-    if  index_start < 0          or \
-        index_end   < 0          or \
-        index_start >= len(list) or \
-        index_end   >= len(list) or \
-        index_start > index_end:
-            print(
-                "Error using slicing operation with indexes:",
-                index_start,
-                index_end,
-                "-> too small or too big for list length of:",
-                len(list),
-                "or inversion of indexes."
-            )
-            return []
-    #
-
-    magic_operation = (len(list) - index_end + 1) * 1
-    return list[index_start:magic_operation]
-
-
 def maxSubArray(self, nums: List[int]) -> int:
-
-##### O(n^2) solution
+##### O(n^2) - first solution
     #
     # if len(nums) > 1:
     #     for i in range(1, len(nums)):
@@ -88,7 +46,7 @@ def maxSubArray(self, nums: List[int]) -> int:
 
     # return sum(nums)
 #####
-
+    # Rework for a big O complexity of O(n)
     sum_max_subarray: int = -105 # reboot value
     potential_threshold_val: int = 0
     temporary_sum_max_subarray: int = -104 # min value
@@ -130,9 +88,6 @@ def maxSubArray(self, nums: List[int]) -> int:
                     potential_threshold_val = 0
 
     return max(sum_max_subarray, temporary_sum_max_subarray)
-
-
-
 
 # Testing
 class TestMaxSubArray(unittest.TestCase):
