@@ -76,9 +76,9 @@ class Solution:
         # First rework for a big O complexity of O(n)
         # Not working on complexe tests
         #####################################################
-        # current_sum_max_subarray: int = -105 # reboot value
+        # current_sum_max_subarray: int = -100001 # reboot value
         # negative_streak_val: int = 0
-        # stored_sum_max_subarray: int = -104 # min value
+        # stored_sum_max_subarray: int = -10000 # min value
         #
         # for element in nums:
         #     # Init search
@@ -111,7 +111,7 @@ class Solution:
         #             # store potential best subarray
         #             if stored_sum_max_subarray < current_sum_max_subarray:
         #                 stored_sum_max_subarray = current_sum_max_subarray
-        #                 current_sum_max_subarray = -105
+        #                 current_sum_max_subarray = -100001
         #                 negative_streak_val = 0
         #
         # return max(current_sum_max_subarray, stored_sum_max_subarray)
