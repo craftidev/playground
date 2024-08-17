@@ -46,56 +46,55 @@ def maxSubArray(self, nums: List[int]) -> int:
     int: The sum of the subarray with the largest sum.
     """
 ##### O(n^2) - first solution
-    #
     # if len(nums) > 1:
     #     for i in range(1, len(nums)):
     #         if sum(nums[i * -1:]) < 0:
     #             return maxSubArray(self, nums[:i * -1])
     #         elif sum(nums[:i]) < 0:
     #             return maxSubArray(self, nums[i:])
-
+    #
     # return sum(nums)
 #####
     # Rework for a big O complexity of O(n)
-    sum_max_subarray: int = -105 # reboot value
-    potential_threshold_val: int = 0
-    temporary_sum_max_subarray: int = -104 # min value
+    current_sum_max_subarray: int = -105 # reboot value
+    negative_streak_val: int = 0
+    stored_sum_max_subarray: int = -104 # min value
 
     for element in nums:
         # Init search
-        if sum_max_subarray == -105:
-            sum_max_subarray = element
+        if current_sum_max_subarray == -105:
+            current_sum_max_subarray = element
             continue
 
         # Find first positive number, or better negative number
-        if sum_max_subarray < 0 and sum_max_subarray < element:
-            sum_max_subarray = element
+        if current_sum_max_subarray < 0 and current_sum_max_subarray < element:
+            current_sum_max_subarray = element
             continue
 
         # Positive encounter
         if element >= 0:
             # after a negative streak
-            if potential_threshold_val < 0:
-                potential_threshold_val += element
+            if negative_streak_val < 0:
+                negative_streak_val += element
                 # element bigger than negative streak
-                if potential_threshold_val > 0:
-                    sum_max_subarray += potential_threshold_val
-                    potential_threshold_val = 0
+                if negative_streak_val > 0:
+                    current_sum_max_subarray += negative_streak_val
+                    negative_streak_val = 0
             # after a positive streak
             else:
-                sum_max_subarray += element
+                current_sum_max_subarray += element
         # Negative encounter
         else:
-            potential_threshold_val += element
+            negative_streak_val += element
             # threshold is getting to big
-            if potential_threshold_val + sum_max_subarray <= 0:
+            if negative_streak_val + current_sum_max_subarray <= 0:
                 # potential best subarray
-                if temporary_sum_max_subarray < sum_max_subarray:
-                    temporary_sum_max_subarray = sum_max_subarray
-                    sum_max_subarray = -105
-                    potential_threshold_val = 0
+                if stored_sum_max_subarray < current_sum_max_subarray:
+                    stored_sum_max_subarray = current_sum_max_subarray
+                    current_sum_max_subarray = -105
+                    negative_streak_val = 0
 
-    return max(sum_max_subarray, temporary_sum_max_subarray)
+    return max(current_sum_max_subarray, stored_sum_max_subarray)
 
 # Testing
 class TestMaxSubArray(unittest.TestCase):
