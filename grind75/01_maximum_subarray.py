@@ -86,9 +86,9 @@ def maxSubArray(self, nums: List[int]) -> int:
         # Negative encounter
         else:
             negative_streak_val += element
-            # threshold is getting to big
+            # negative streak is getting too big
             if negative_streak_val + current_sum_max_subarray <= 0:
-                # potential best subarray
+                # store potential best subarray
                 if stored_sum_max_subarray < current_sum_max_subarray:
                     stored_sum_max_subarray = current_sum_max_subarray
                     current_sum_max_subarray = -105
