@@ -34,6 +34,11 @@ import unittest
 import random
 
 class Solution:
+    def __init__(self):
+        self.max_subarray_sum: int = -105
+        self.max_cumulative_sum_left: int = 0
+        self.max_cumulative_sum_right: int = 0
+
     def maxSubArray(self, nums: List[int]) -> int:
         """
         This function finds the subarray with the largest sum in a given list of integers.
@@ -46,7 +51,28 @@ class Solution:
         int: The sum of the subarray with the largest sum.
         """
 
-        return 0
+        for cursor_left in range(0, len(nums)):
+            cursor_right: int = len(nums) - 1 - cursor_left
+
+            self.max_cumulative_sum_left += nums[cursor_left]
+            self.max_cumulative_sum_right += nums[cursor_right]
+            self.max_subarray_sum = max(
+                self.max_subarray_sum,
+                self.max_cumulative_sum_left,
+                self.max_cumulative_sum_right
+            )
+
+            if len(nums) > 1:
+                if self.max_cumulative_sum_left < 0:
+                    self.max_cumulative_sum_left = 0
+                    self.max_cumulative_sum_right = 0
+                    return self.maxSubArray(nums[cursor_left + 1:])
+                elif self.max_cumulative_sum_right < 0:
+                    self.max_cumulative_sum_right = 0
+                    self.max_cumulative_sum_left = 0
+                    return self.maxSubArray(nums[:-(cursor_left + 1)])
+
+        return self.max_subarray_sum
 
     ##### O(n^2) - first solution
         # if len(nums) > 1:
@@ -101,19 +127,20 @@ class Solution:
         #
         # return max(current_sum_max_subarray, stored_sum_max_subarray)
     #####
+
 # Testing
 class TestMaxSubArray(unittest.TestCase):
     def test_only_negative_int(self):
-        self.assertEqual(maxSubArray(self, [-2, -101, -3, -104, -103, -2, 0, -5, -4]), 0)
+        self.assertEqual(Solution().maxSubArray([-2, -101, -3, -104, -103, -2, 0, -5, -4]), 0)
     def test_one_element_subarray(self):
         random_int = random.randint(-104, 104)
-        self.assertEqual(maxSubArray(self, [random_int]), random_int)
+        self.assertEqual(Solution().maxSubArray([random_int]), random_int)
     def test_verified_subarray(self):
-        self.assertEqual(maxSubArray(self, [-2, 1, -3, 4, -1, 2, 1, -5, 4]), 6)
-        self.assertEqual(maxSubArray(self, [5, 4, -1, 7, 8]), 23)
+        self.assertEqual(Solution().maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]), 6)
+        self.assertEqual(Solution().maxSubArray([5, 4, -1, 7, 8]), 23)
     def test_complex_subarray(self):
         self.assertEqual(
-            maxSubArray(self, [-1, 5, -1, 3, 3, -1, 2, -2, 5, -4, -5, -5, 20, -11, -9, 5, -1, 6, -2, 7, 5, 1]), 21
+            Solution().maxSubArray([-1, 5, -1, 3, 3, -1, 2, -2, 5, -4, -5, -5, 20, -11, -9, 5, -1, 6, -2, 7, 5, 1]), 21
         )
 
 if __name__ == '__main__':
