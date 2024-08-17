@@ -34,33 +34,34 @@ import unittest
 import random
 
 class Solution:
-    def __init__(self):
-        self.max_cumulative_sum_left: int = 0
-        self.max_cumulative_sum_right: int = 0
-        self.max_subarray_sum: int = -105
-
     def maxSubArray(self, nums: List[int]) -> int:
-    # Second rework with D&Q idea in mind
-        for cursor_left in range(0, len(nums)):
-            cursor_right: int = len(nums) - 1 - cursor_left
+        return self.devide_and_conquer(nums, 0, len(nums) - 1)[0]
 
-            self.max_cumulative_sum_left += nums[cursor_left]
-            self.max_cumulative_sum_right += nums[cursor_right]
-            self.max_subarray_sum = max(
-                self.max_subarray_sum,
-                self.max_cumulative_sum_left,
-                self.max_cumulative_sum_right
-            )
+    def devide_and_conquer(self, nums: List[int], left: int, right: int) -> tuple[int, int, int, int]:
+        # Base case when divided down to one element
+        if left == right:
+            return nums[left], nums[left], nums[left], nums[left]
 
-            if (cursor_left + 1) * 2 <= len(nums):
-                if self.max_cumulative_sum_left < 0 or self.max_cumulative_sum_right < 0:
-                    self.max_cumulative_sum_left = max(0, self.max_cumulative_sum_left)
-                    self.max_cumulative_sum_right = max(0, self.max_cumulative_sum_right)
-                    return self.maxSubArray(nums[cursor_left + 1:-(cursor_left + 1)])
+        # Divide -> recursion
+        mid = (left + right) // 2
+        left_result = self.devide_and_conquer(nums, left, mid)
+        right_result = self.devide_and_conquer(nums, mid + 1, right)
 
-        return self.max_subarray_sum
+        # Conquer -> max left/right/half crossing
+        max_left_right: int = max(left_result[0], right_result[0])
+        half_crossing_sum: int = left_result[2] + right_result[1]
+        current_max: int = max(max_left_right, half_crossing_sum)
 
-    ##### O(n^2) - first solution
+        # Combine -> 1,5 crossing becomes new left/right and new total
+        left_handed_max: int = max(left_result[1], left_result[3] + right_result[1])
+        right_handed_max: int = max(right_result[2], right_result[3] + left_result[2])
+        total_sum: int = left_result[3] + right_result[3]
+
+        return current_max, left_handed_max, right_handed_max, total_sum
+
+    #####
+        # O(n^2) - first solution
+        ######################################################
         # if len(nums) > 1:
         #     for i in range(1, len(nums)):
         #         if sum(nums[i * -1:]) < 0:
@@ -73,6 +74,8 @@ class Solution:
 
     #####
         # First rework for a big O complexity of O(n)
+        # Not working on complexe tests
+        #####################################################
         # current_sum_max_subarray: int = -105 # reboot value
         # negative_streak_val: int = 0
         # stored_sum_max_subarray: int = -104 # min value
@@ -114,26 +117,36 @@ class Solution:
         # return max(current_sum_max_subarray, stored_sum_max_subarray)
     #####
 
-    #### ChatGPT solution when asking for D&Q
-        # return self.divide_and_conquer(nums, 0, len(nums) - 1)[0]
-
-    # def divide_and_conquer(self, nums: List[int], left: int, right: int) -> tuple[int, int, int, int]:
-        # if left == right:
-        #     return nums[left], nums[left], nums[left], nums[left]  # Base case: one element
-
-        # mid = (left + right) // 2
-        # left_result = self.divide_and_conquer(nums, left, mid)
-        # right_result = self.divide_and_conquer(nums, mid + 1, right)
-
-        # max_left_right = max(left_result[0], right_result[0])
-        # max_crossing_sum = left_result[2] + right_result[1]
-
-        # max_sum = max(max_left_right, max_crossing_sum)
-        # left_sum = max(left_result[1], left_result[3] + right_result[1])
-        # right_sum = max(right_result[2], right_result[3] + left_result[2])
-        # total_sum = left_result[3] + right_result[3]
-
-        # return max_sum, left_sum, right_sum, total_sum
+    #####
+        # 3rd try after reading about D&Q
+        # Confusion, use too much memory
+        #####################################################v
+    # class Solution:
+        # def __init__(self):
+        #     self.max_cumulative_sum_left: int = 0
+        #     self.max_cumulative_sum_right: int = 0
+        #     self.max_subarray_sum: int = -100001
+        #
+        # def maxSubArray(self, nums: List[int]) -> int:
+        # # Second rework with D&Q idea in mind
+        #     for cursor_left in range(0, len(nums)):
+        #         cursor_right: int = len(nums) - 1 - cursor_left
+        #
+        #         self.max_cumulative_sum_left += nums[cursor_left]
+        #         self.max_cumulative_sum_right += nums[cursor_right]
+        #         self.max_subarray_sum = max(
+        #             self.max_subarray_sum,
+        #             self.max_cumulative_sum_left,
+        #             self.max_cumulative_sum_right
+        #         )
+        #
+        #         if (cursor_left + 1) * 2 <= len(nums):
+        #             if self.max_cumulative_sum_left < 0 or self.max_cumulative_sum_right < 0:
+        #                 self.max_cumulative_sum_left = max(0, self.max_cumulative_sum_left)
+        #                 self.max_cumulative_sum_right = max(0, self.max_cumulative_sum_right)
+        #                 return self.maxSubArray(nums[cursor_left + 1:-(cursor_left + 1)])
+        #
+        #     return self.max_subarray_sum
     #####
 
 # Testing
