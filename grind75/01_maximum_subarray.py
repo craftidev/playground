@@ -34,30 +34,44 @@ import unittest
 import random
 
 class Solution:
+    # The simplest shit ever... got side tracked with that D&Q in the instructions
     def maxSubArray(self, nums: List[int]) -> int:
-        return self.devide_and_conquer(nums, 0, len(nums) - 1)[0]
+        current_max: int = 0
+        overall_max: int = -100001 # Min val
 
-    def devide_and_conquer(self, nums: List[int], left: int, right: int) -> tuple[int, int, int, int]:
-        # Base case when divided down to one element
-        if left == right:
-            return nums[left], nums[left], nums[left], nums[left]
+        for num in nums:
+            current_max = max(num + current_max, num)
+            overall_max = max(current_max, overall_max)
 
-        # Divide -> recursion
-        mid = (left + right) // 2
-        left_result = self.devide_and_conquer(nums, left, mid)
-        right_result = self.devide_and_conquer(nums, mid + 1, right)
+        return overall_max
 
-        # Conquer -> max left/right/half crossing
-        max_left_right: int = max(left_result[0], right_result[0])
-        half_crossing_sum: int = left_result[2] + right_result[1]
-        current_max: int = max(max_left_right, half_crossing_sum)
+    #####
+        # Looking at LLM D&Q solution, trying to work it out
+        ######################################################
+        # return self.devide_and_conquer(nums, 0, len(nums) - 1)[0]
 
-        # Combine -> 1,5 crossing becomes new left/right and new total
-        left_handed_max: int = max(left_result[1], left_result[3] + right_result[1])
-        right_handed_max: int = max(right_result[2], right_result[3] + left_result[2])
-        total_sum: int = left_result[3] + right_result[3]
+    # def devide_and_conquer(self, nums: List[int], left: int, right: int) -> tuple[int, int, int, int]:
+        # # Base case when divided down to one element
+        # if left == right:
+        #     return nums[left], nums[left], nums[left], nums[left]
 
-        return current_max, left_handed_max, right_handed_max, total_sum
+        # # Divide -> recursion
+        # mid = (left + right) // 2
+        # left_result = self.devide_and_conquer(nums, left, mid)
+        # right_result = self.devide_and_conquer(nums, mid + 1, right)
+
+        # # Conquer -> max left/right/half crossing
+        # max_left_right: int = max(left_result[0], right_result[0])
+        # half_crossing_sum: int = left_result[2] + right_result[1]
+        # current_max: int = max(max_left_right, half_crossing_sum)
+
+        # # Combine -> 1,5 crossing becomes new left/right and new total
+        # left_handed_max: int = max(left_result[1], left_result[3] + right_result[1])
+        # right_handed_max: int = max(right_result[2], right_result[3] + left_result[2])
+        # total_sum: int = left_result[3] + right_result[3]
+
+        # return current_max, left_handed_max, right_handed_max, total_sum
+    #####
 
     #####
         # O(n^2) - first solution
