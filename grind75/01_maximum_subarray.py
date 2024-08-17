@@ -53,7 +53,7 @@ class Solution:
             )
 
             if (cursor_left + 1) * 2 <= len(nums):
-                if self.max_cumulative_sum_left < 0 or s[-2, 1, -3, 4, -1, 2, 1, -5, 4]elf.max_cumulative_sum_right < 0:
+                if self.max_cumulative_sum_left < 0 or self.max_cumulative_sum_right < 0:
                     self.max_cumulative_sum_left = max(0, self.max_cumulative_sum_left)
                     self.max_cumulative_sum_right = max(0, self.max_cumulative_sum_right)
                     return self.maxSubArray(nums[cursor_left + 1:-(cursor_left + 1)])
