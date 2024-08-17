@@ -50,7 +50,7 @@ class Solution:
         Returns:
         int: The sum of the subarray with the largest sum.
         """
-
+        # Second rework with D&Q
         for cursor_left in range(0, len(nums)):
             cursor_right: int = len(nums) - 1 - cursor_left
 
@@ -62,15 +62,11 @@ class Solution:
                 self.max_cumulative_sum_right
             )
 
-            if len(nums) > 1:
-                if self.max_cumulative_sum_left < 0:
-                    self.max_cumulative_sum_left = 0
-                    self.max_cumulative_sum_right = 0
-                    return self.maxSubArray(nums[cursor_left + 1:])
-                elif self.max_cumulative_sum_right < 0:
-                    self.max_cumulative_sum_right = 0
-                    self.max_cumulative_sum_left = 0
-                    return self.maxSubArray(nums[:-(cursor_left + 1)])
+            if (cursor_left + 1) * 2 <= len(nums):
+                if self.max_cumulative_sum_left < 0 or self.max_cumulative_sum_right < 0:
+                    self.max_cumulative_sum_left = max(0, self.max_cumulative_sum_left)
+                    self.max_cumulative_sum_right = max(0, self.max_cumulative_sum_right)
+                    return self.maxSubArray(nums[cursor_left + 1:-(cursor_left + 1)])
 
         return self.max_subarray_sum
 
