@@ -35,22 +35,12 @@ import random
 
 class Solution:
     def __init__(self):
-        self.max_subarray_sum: int = -105
         self.max_cumulative_sum_left: int = 0
         self.max_cumulative_sum_right: int = 0
+        self.max_subarray_sum: int = -105
 
     def maxSubArray(self, nums: List[int]) -> int:
-        """
-        This function finds the subarray with the largest sum in a given list of integers.
-        It uses a dynamic programming approach with a time complexity of O(n).
-
-        Parameters:
-        nums (List[int]): The input list of integers.
-
-        Returns:
-        int: The sum of the subarray with the largest sum.
-        """
-        # Second rework with D&Q
+    # Second rework with D&Q idea in mind
         for cursor_left in range(0, len(nums)):
             cursor_right: int = len(nums) - 1 - cursor_left
 
@@ -63,7 +53,7 @@ class Solution:
             )
 
             if (cursor_left + 1) * 2 <= len(nums):
-                if self.max_cumulative_sum_left < 0 or self.max_cumulative_sum_right < 0:
+                if self.max_cumulative_sum_left < 0 or s[-2, 1, -3, 4, -1, 2, 1, -5, 4]elf.max_cumulative_sum_right < 0:
                     self.max_cumulative_sum_left = max(0, self.max_cumulative_sum_left)
                     self.max_cumulative_sum_right = max(0, self.max_cumulative_sum_right)
                     return self.maxSubArray(nums[cursor_left + 1:-(cursor_left + 1)])
@@ -108,7 +98,7 @@ class Solution:
         #                 current_sum_max_subarray += negative_streak_val
         #                 negative_streak_val = 0
         #         # after a positive streak
-        #         else:
+        #         else:[-2, 1, -3, 4, -1, 2, 1, -5, 4]
         #             current_sum_max_subarray += element
         #     # Negative encounter
         #     else:
@@ -122,6 +112,28 @@ class Solution:
         #                 negative_streak_val = 0
         #
         # return max(current_sum_max_subarray, stored_sum_max_subarray)
+    #####
+
+    #### ChatGPT solution when asking for D&Q
+        # return self.divide_and_conquer(nums, 0, len(nums) - 1)[0]
+
+    # def divide_and_conquer(self, nums: List[int], left: int, right: int) -> tuple[int, int, int, int]:
+        # if left == right:
+        #     return nums[left], nums[left], nums[left], nums[left]  # Base case: one element
+
+        # mid = (left + right) // 2
+        # left_result = self.divide_and_conquer(nums, left, mid)
+        # right_result = self.divide_and_conquer(nums, mid + 1, right)
+
+        # max_left_right = max(left_result[0], right_result[0])
+        # max_crossing_sum = left_result[2] + right_result[1]
+
+        # max_sum = max(max_left_right, max_crossing_sum)
+        # left_sum = max(left_result[1], left_result[3] + right_result[1])
+        # right_sum = max(right_result[2], right_result[3] + left_result[2])
+        # total_sum = left_result[3] + right_result[3]
+
+        # return max_sum, left_sum, right_sum, total_sum
     #####
 
 # Testing
