@@ -18,4 +18,8 @@ To test:
 bun mocha exercises/exercise-name.ts
 ```
 
+There is a custom task: `Run Mocha Test`
+
+---
+
 This project was created using `bun init` in bun v1.1.21. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
