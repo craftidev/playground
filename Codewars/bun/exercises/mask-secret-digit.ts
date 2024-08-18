@@ -31,7 +31,7 @@ function maskify(cc: string): string {
 }
 
 if (require.main === module) {
-    console.log("THIS IS A NORMAL RUN - to run tests: `bun mocha file-name.ts`");
+    console.log("THIS IS A NORMAL RUN - to run tests: `bun mocha exercises/file-name.ts`");
 } else {
     // Tests
     const chai = require('chai');
