@@ -15,6 +15,8 @@ Output: [
     [1,2,1]
 ]
 """
+from collections import deque
+from math import inf
 from typing import List
 import unittest
 
@@ -25,61 +27,36 @@ class Solution:
     ) -> List[List[int]]:
 
         # Init matrix output
-        init_cell_value: int = -1
-        proximity_map_result: List[List[int]] = [[init_cell_value] * len(row) for row in binary_matrix_input]
+        LARGE_NUMBER = 10**4 # equal infinity in this usecase
+        proximity_map_result: List[List[int]] = [[LARGE_NUMBER] * len(row) for row in binary_matrix_input]
+        input_row_count = len(binary_matrix_input)
 
-        # Get all the zeros
-        list_of_zeros_coordinates: List[tuple] = []
-        for row in range(len(binary_matrix_input)):
+        # Get all the zeros and add them to the queue
+        search_queue = deque()
+        for row in range(input_row_count):
             for col in range(len(binary_matrix_input[row])):
                 if binary_matrix_input[row][col] == 0:
-                    list_of_zeros_coordinates.append((row, col))
+                    proximity_map_result[row][col] = 0
+                    search_queue.append((row, col))
 
         possible_directions: List[tuple] = [(-1, 0), (0, -1), (1, 0), (0, 1)]
 
-        for zero_origin_row, zero_origin_col in list_of_zeros_coordinates:
-            proximity_map_result[zero_origin_row][zero_origin_col] = 0
+        # Breath Frist Search algorythm
+        while search_queue:
+            row, col = search_queue.popleft()
 
-        self.breath_first_search_proximity_calculator(
-            binary_matrix_input,
-            proximity_map_result,
-            list_of_zeros_coordinates,
-            possible_directions,
-            init_cell_value
-        )
+            for direction_row, direction_col in possible_directions:
+                new_row, new_col = row + direction_row, col + direction_col
+
+                if (
+                    0 <= new_row < input_row_count and
+                    0 <= new_col < len(binary_matrix_input[new_row]) and
+                    proximity_map_result[new_row][new_col] > proximity_map_result[row][col] + 1
+                ):
+                    proximity_map_result[new_row][new_col] = proximity_map_result[row][col] + 1
+                    search_queue.append((new_row, new_col))
 
         return proximity_map_result
-
-    def breath_first_search_proximity_calculator(
-            self,
-            matrix_input: List[List[int]],
-            matrix_output: List[List[int]],
-            origins: List[tuple],
-            directions: List[tuple],
-            default_and_unique_value: int,
-            counter: int = 0
-    ):
-        new_origins: List[tuple] = []
-
-        for origin_row, origin_col in origins:
-            for direction_row, direction_col in directions:
-                if (
-                    0 <= origin_row + direction_row < len(matrix_input) and
-                    0 <= origin_col + direction_col < len(matrix_input[origin_row + direction_row]) and
-                    matrix_output[origin_row + direction_row][origin_col + direction_col] == default_and_unique_value
-                ):
-                    matrix_output[origin_row + direction_row][origin_col + direction_col] = counter + 1
-                    new_origins.append((origin_row + direction_row, origin_col + direction_col))
-
-        if new_origins:
-            self.breath_first_search_proximity_calculator(
-                matrix_input,
-                matrix_output,
-                new_origins,
-                directions,
-                default_and_unique_value,
-                counter + 1
-            )
 
 # Testing
 class TestMaxSubArray(unittest.TestCase):
